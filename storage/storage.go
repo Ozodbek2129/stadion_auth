@@ -17,8 +17,9 @@ type IUserStorage interface {
 	GetRegister(context.Context, *pb.GetRegisterRequest) (*pb.GetRegisterResponse, error)
 	GetRegisters(context.Context, *pb.GetRegistersRequest) (*pb.GetRegistersResponse, error)
 	DeleteRegister(context.Context, *pb.DeleteRegisterRequest) (*pb.DeleteRegisterResponse, error)
-	Login(context.Context, *pb.LoginRequest) (*pb.LoginResponse, error)	
 	UpdatePassword(context.Context, *pb.UpdatePasswordRequest) (*pb.UpdatePasswordResponse, error)
-	CreatePassword(context.Context, *pb.CreatePasswordRequest) (*pb.CreatePasswordResponse, error)
-	ConfirmationPassword(context.Context, *pb.ConfirmationPasswordRequest) (*pb.ConfirmationPasswordResponse, error)
+	GetByEmail (context.Context, *pb.GetByEmailRequest) (*pb.GetByEmailResponse, error)
+	UpdateRole (context.Context, *pb.UpdateRoleRequest) (*pb.UpdateRoleResponse, error)
+	Tobeanadmin (context.Context, *pb.TobeanadminRequest) (*pb.TobeanadminResponse, error)
+	CheckUserId (context.Context, *pb.CheckUserIdRequest) (*pb.CheckUserIdResponse, error)
 }

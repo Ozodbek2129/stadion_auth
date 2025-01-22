@@ -19,16 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RegisterService_CreateRegister_FullMethodName       = "/register.RegisterService/CreateRegister"
-	RegisterService_Update_FullMethodName               = "/register.RegisterService/Update"
-	RegisterService_AddImage_FullMethodName             = "/register.RegisterService/AddImage"
-	RegisterService_GetRegister_FullMethodName          = "/register.RegisterService/GetRegister"
-	RegisterService_GetRegisters_FullMethodName         = "/register.RegisterService/GetRegisters"
-	RegisterService_DeleteRegister_FullMethodName       = "/register.RegisterService/DeleteRegister"
-	RegisterService_Login_FullMethodName                = "/register.RegisterService/Login"
-	RegisterService_UpdatePassword_FullMethodName       = "/register.RegisterService/UpdatePassword"
-	RegisterService_CreatePassword_FullMethodName       = "/register.RegisterService/CreatePassword"
-	RegisterService_ConfirmationPassword_FullMethodName = "/register.RegisterService/ConfirmationPassword"
+	RegisterService_CreateRegister_FullMethodName = "/register.RegisterService/CreateRegister"
+	RegisterService_Update_FullMethodName         = "/register.RegisterService/Update"
+	RegisterService_AddImage_FullMethodName       = "/register.RegisterService/AddImage"
+	RegisterService_GetRegister_FullMethodName    = "/register.RegisterService/GetRegister"
+	RegisterService_GetRegisters_FullMethodName   = "/register.RegisterService/GetRegisters"
+	RegisterService_DeleteRegister_FullMethodName = "/register.RegisterService/DeleteRegister"
+	RegisterService_Login_FullMethodName          = "/register.RegisterService/Login"
+	RegisterService_UpdatePassword_FullMethodName = "/register.RegisterService/UpdatePassword"
+	RegisterService_GetByEmail_FullMethodName     = "/register.RegisterService/GetByEmail"
+	RegisterService_UpdateRole_FullMethodName     = "/register.RegisterService/UpdateRole"
+	RegisterService_Tobeanadmin_FullMethodName    = "/register.RegisterService/Tobeanadmin"
+	RegisterService_CheckUserId_FullMethodName    = "/register.RegisterService/CheckUserId"
 )
 
 // RegisterServiceClient is the client API for RegisterService service.
@@ -43,8 +45,10 @@ type RegisterServiceClient interface {
 	DeleteRegister(ctx context.Context, in *DeleteRegisterRequest, opts ...grpc.CallOption) (*DeleteRegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	UpdatePassword(ctx context.Context, in *UpdatePasswordRequest, opts ...grpc.CallOption) (*UpdatePasswordResponse, error)
-	CreatePassword(ctx context.Context, in *CreatePasswordRequest, opts ...grpc.CallOption) (*CreatePasswordResponse, error)
-	ConfirmationPassword(ctx context.Context, in *ConfirmationPasswordRequest, opts ...grpc.CallOption) (*ConfirmationPasswordResponse, error)
+	GetByEmail(ctx context.Context, in *GetByEmailRequest, opts ...grpc.CallOption) (*GetByEmailResponse, error)
+	UpdateRole(ctx context.Context, in *UpdateRoleRequest, opts ...grpc.CallOption) (*UpdateRoleResponse, error)
+	Tobeanadmin(ctx context.Context, in *TobeanadminRequest, opts ...grpc.CallOption) (*TobeanadminResponse, error)
+	CheckUserId(ctx context.Context, in *CheckUserIdRequest, opts ...grpc.CallOption) (*CheckUserIdResponse, error)
 }
 
 type registerServiceClient struct {
@@ -135,20 +139,40 @@ func (c *registerServiceClient) UpdatePassword(ctx context.Context, in *UpdatePa
 	return out, nil
 }
 
-func (c *registerServiceClient) CreatePassword(ctx context.Context, in *CreatePasswordRequest, opts ...grpc.CallOption) (*CreatePasswordResponse, error) {
+func (c *registerServiceClient) GetByEmail(ctx context.Context, in *GetByEmailRequest, opts ...grpc.CallOption) (*GetByEmailResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreatePasswordResponse)
-	err := c.cc.Invoke(ctx, RegisterService_CreatePassword_FullMethodName, in, out, cOpts...)
+	out := new(GetByEmailResponse)
+	err := c.cc.Invoke(ctx, RegisterService_GetByEmail_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *registerServiceClient) ConfirmationPassword(ctx context.Context, in *ConfirmationPasswordRequest, opts ...grpc.CallOption) (*ConfirmationPasswordResponse, error) {
+func (c *registerServiceClient) UpdateRole(ctx context.Context, in *UpdateRoleRequest, opts ...grpc.CallOption) (*UpdateRoleResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ConfirmationPasswordResponse)
-	err := c.cc.Invoke(ctx, RegisterService_ConfirmationPassword_FullMethodName, in, out, cOpts...)
+	out := new(UpdateRoleResponse)
+	err := c.cc.Invoke(ctx, RegisterService_UpdateRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *registerServiceClient) Tobeanadmin(ctx context.Context, in *TobeanadminRequest, opts ...grpc.CallOption) (*TobeanadminResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TobeanadminResponse)
+	err := c.cc.Invoke(ctx, RegisterService_Tobeanadmin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *registerServiceClient) CheckUserId(ctx context.Context, in *CheckUserIdRequest, opts ...grpc.CallOption) (*CheckUserIdResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckUserIdResponse)
+	err := c.cc.Invoke(ctx, RegisterService_CheckUserId_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -167,8 +191,10 @@ type RegisterServiceServer interface {
 	DeleteRegister(context.Context, *DeleteRegisterRequest) (*DeleteRegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordResponse, error)
-	CreatePassword(context.Context, *CreatePasswordRequest) (*CreatePasswordResponse, error)
-	ConfirmationPassword(context.Context, *ConfirmationPasswordRequest) (*ConfirmationPasswordResponse, error)
+	GetByEmail(context.Context, *GetByEmailRequest) (*GetByEmailResponse, error)
+	UpdateRole(context.Context, *UpdateRoleRequest) (*UpdateRoleResponse, error)
+	Tobeanadmin(context.Context, *TobeanadminRequest) (*TobeanadminResponse, error)
+	CheckUserId(context.Context, *CheckUserIdRequest) (*CheckUserIdResponse, error)
 	mustEmbedUnimplementedRegisterServiceServer()
 }
 
@@ -203,11 +229,17 @@ func (UnimplementedRegisterServiceServer) Login(context.Context, *LoginRequest) 
 func (UnimplementedRegisterServiceServer) UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePassword not implemented")
 }
-func (UnimplementedRegisterServiceServer) CreatePassword(context.Context, *CreatePasswordRequest) (*CreatePasswordResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatePassword not implemented")
+func (UnimplementedRegisterServiceServer) GetByEmail(context.Context, *GetByEmailRequest) (*GetByEmailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetByEmail not implemented")
 }
-func (UnimplementedRegisterServiceServer) ConfirmationPassword(context.Context, *ConfirmationPasswordRequest) (*ConfirmationPasswordResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ConfirmationPassword not implemented")
+func (UnimplementedRegisterServiceServer) UpdateRole(context.Context, *UpdateRoleRequest) (*UpdateRoleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRole not implemented")
+}
+func (UnimplementedRegisterServiceServer) Tobeanadmin(context.Context, *TobeanadminRequest) (*TobeanadminResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Tobeanadmin not implemented")
+}
+func (UnimplementedRegisterServiceServer) CheckUserId(context.Context, *CheckUserIdRequest) (*CheckUserIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckUserId not implemented")
 }
 func (UnimplementedRegisterServiceServer) mustEmbedUnimplementedRegisterServiceServer() {}
 func (UnimplementedRegisterServiceServer) testEmbeddedByValue()                         {}
@@ -374,38 +406,74 @@ func _RegisterService_UpdatePassword_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RegisterService_CreatePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePasswordRequest)
+func _RegisterService_GetByEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByEmailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegisterServiceServer).CreatePassword(ctx, in)
+		return srv.(RegisterServiceServer).GetByEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RegisterService_CreatePassword_FullMethodName,
+		FullMethod: RegisterService_GetByEmail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegisterServiceServer).CreatePassword(ctx, req.(*CreatePasswordRequest))
+		return srv.(RegisterServiceServer).GetByEmail(ctx, req.(*GetByEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RegisterService_ConfirmationPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConfirmationPasswordRequest)
+func _RegisterService_UpdateRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRoleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegisterServiceServer).ConfirmationPassword(ctx, in)
+		return srv.(RegisterServiceServer).UpdateRole(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RegisterService_ConfirmationPassword_FullMethodName,
+		FullMethod: RegisterService_UpdateRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegisterServiceServer).ConfirmationPassword(ctx, req.(*ConfirmationPasswordRequest))
+		return srv.(RegisterServiceServer).UpdateRole(ctx, req.(*UpdateRoleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegisterService_Tobeanadmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TobeanadminRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegisterServiceServer).Tobeanadmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RegisterService_Tobeanadmin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegisterServiceServer).Tobeanadmin(ctx, req.(*TobeanadminRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegisterService_CheckUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckUserIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegisterServiceServer).CheckUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RegisterService_CheckUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegisterServiceServer).CheckUserId(ctx, req.(*CheckUserIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -450,12 +518,20 @@ var RegisterService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RegisterService_UpdatePassword_Handler,
 		},
 		{
-			MethodName: "CreatePassword",
-			Handler:    _RegisterService_CreatePassword_Handler,
+			MethodName: "GetByEmail",
+			Handler:    _RegisterService_GetByEmail_Handler,
 		},
 		{
-			MethodName: "ConfirmationPassword",
-			Handler:    _RegisterService_ConfirmationPassword_Handler,
+			MethodName: "UpdateRole",
+			Handler:    _RegisterService_UpdateRole_Handler,
+		},
+		{
+			MethodName: "Tobeanadmin",
+			Handler:    _RegisterService_Tobeanadmin_Handler,
+		},
+		{
+			MethodName: "CheckUserId",
+			Handler:    _RegisterService_CheckUserId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
