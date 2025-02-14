@@ -1,0 +1,6 @@
+time=2025-02-13T16:12:19.447+05:00 level=ERROR msg="Error while creating register: pq: relation \"register\" does not exist"
+time=2025-02-13T16:12:19.448+05:00 level=ERROR msg="Error creating register service: pq: relation \"register\" does not exist"
+time=2025-02-13T16:12:19.450+05:00 level=ERROR msg="Foydalanuvchi malumotlarni bazga yuborishda xatolik: rpc error: code = Unknown desc = pq: relation \"register\" does not exist"
+time=2025-02-13T16:22:04.919+05:00 level=ERROR msg="Error while creating register: pq: duplicate key value violates unique constraint \"register_email_key\""
+time=2025-02-13T16:22:04.919+05:00 level=ERROR msg="Error creating register service: pq: duplicate key value violates unique constraint \"register_email_key\""
+time=2025-02-13T16:22:04.919+05:00 level=ERROR msg="Foydalanuvchi malumotlarni bazga yuborishda xatolik: rpc error: code = Unknown desc = pq: duplicate key value violates unique constraint \"register_email_key\""

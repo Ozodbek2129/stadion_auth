@@ -59,7 +59,7 @@ func (u *UserRepository) CreateRegister(ctx context.Context, req *pb.CreateRegis
 func (u *UserRepository) Update(ctx context.Context,req *pb.UpdateRequest) (*pb.UpdateResponse, error) {
 	query_update := `UPDATE register SET email = $1, first_name = $2, last_name = $3, phonenummer = $4, updated_at = $5 WHERE id = $6 and deleted_at = 0`
 
-	query_old := `select id, email, first_name, last_name, phonenummer from register where id = $1`
+	query_old := `select id, email, first_name, last_name, phonenummer from register where id = $1 and deleted_at = 0`
 	var old struct {
 		Id string
 		Email string
